@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP in Agentic AI - Learning Modules</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            color: #4a5568;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+        
+        .module {
+            background: #fff;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border-left: 5px solid #667eea;
+        }
+        
+        .module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .module-header {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            padding: 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .module-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .module-level {
+            background: #667eea;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+        
+        .module-content {
+            padding: 25px;
+            display: none;
+        }
+        
+        .module-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .learning-objectives {
+            background: #f0fff4;
+            border-left: 4px solid #38a169;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        
+        .learning-objectives h4 {
+            color: #2f855a;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .topics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .topic {
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.2s ease;
+        }
+        
+        .topic:hover {
+            background: #f7fafc;
+            border-color: #667eea;
+        }
+        
+        .topic h5 {
+            color: #4a5568;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        
+        .activities {
+            background: #fff5f5;
+            border-left: 4px solid #e53e3e;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        
+        .activities h4 {
+            color: #c53030;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .assessment {
+            background: #f0f4ff;
+            border-left: 4px solid #3182ce;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .assessment h4 {
+            color: #2b6cb0;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .duration {
+            background: #764ba2;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-left: auto;
+        }
+        
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+            color: #667eea;
+        }
+        
+        .module-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .progress-tracker {
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .progress-bar {
+            background: #e2e8f0;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            border-radius: 6px;
+            transition: width 0.3s ease;
+        }
+        
+        .module-checklist {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .module-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: #f7fafc;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .module-checkbox:hover {
+            background: #edf2f7;
+        }
+        
+        .module-checkbox input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #667eea;
+        }
+        
+        .resource-links {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .resource-links h5 {
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+        
+        .resource-link {
+            display: inline-block;
+            margin: 5px 10px 5px 0;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9em;
+            transition: transform 0.2s ease;
+        }
+        
+        .resource-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MCP in Agentic AI</h1>
+        <p class="subtitle">Comprehensive Learning Modules for Beginner to Medium Level Learners</p>
+        
+        <div class="progress-tracker">
+            <h3>Learning Progress</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p id="progressText">0% Complete - Start your journey into MCP and Agentic AI!</p>
+            <div class="module-checklist">
+                <label class="module-checkbox">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Module 1</span>
+                </label>
+                <label class="module-checkbox">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Module 2</span>
+                </label>
+                <label class="module-checkbox">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Module 3</span>
+                </label>
+                <label class="module-checkbox">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Module 4</span>
+                </label>
+                <label class="module-checkbox">
+                    <input type="checkbox" onchange="updateProgress()">
+                    <span>Module 5</span>
+                </label>
+            </div>
+        </div>
+        
+        <!-- Module 1 -->
+        <div class="module">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-title">
+                    🚀 Module 1: Introduction to Agentic AI & MCP Fundamentals
+                    <span class="module-level">Beginner</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <span class="duration">3-4 hours</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+            </div>
+            <div class="module-content">
+                <div class="learning-objectives">
+                    <h4>🎯 Learning Objectives</h4>
+                    <ul>
+                        <li>Understand what Agentic AI is and how it differs from traditional AI</li>
+                        <li>Learn the core concepts of Model Context Protocol (MCP)</li>
+                        <li>Identify real-world applications and use cases</li>
+                        <li>Grasp the importance of context management in AI systems</li>
+                    </ul>
+                </div>
+                
+                <div class="topics">
+                    <div class="topic">
+                        <h5>🤖 What is Agentic AI?</h5>
+                        <p>Definition, characteristics, and key differences from reactive AI systems. Understanding autonomy, goal-oriented behavior, and decision-making capabilities.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>📡 Introduction to MCP</h5>
+                        <p>Model Context Protocol basics: what it is, why it matters, and how it enables better AI agent communication and context sharing.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>🌍 Real-World Applications</h5>
+                        <p>Explore current implementations in chatbots, virtual assistants, automation tools, and enterprise solutions.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>🧠 Context Management</h5>
+                        <p>Why context matters in AI, challenges of maintaining context across interactions, and MCP's role in solving these challenges.</p>
+                    </div>
+                </div>
+                
+                <div class="activities">
+                    <h4>🎯 Hands-On Activities</h4>
+                    <ul>
+                        <li>Interactive demo: Compare traditional AI vs. Agentic AI responses</li>
+                        <li>Case study analysis: Successful Agentic AI implementations</li>
+                        <li>Context experiment: See how MCP maintains conversation context</li>
+                    </ul>
+                </div>
+                
+                <div class="assessment">
+                    <h4>📋 Assessment</h4>
+                    <ul>
+                        <li>Quiz: Basic concepts of Agentic AI and MCP (10 questions)</li>
+                        <li>Short essay: Describe a potential use case for Agentic AI in your field</li>
+                    </ul>
+                </div>
+                
+                <div class="resource-links">
+                    <h5>📚 Additional Resources</h5>
+                    <a href="#" class="resource-link">MCP Documentation</a>
+                    <a href="#" class="resource-link">Agentic AI Research Papers</a>
+                    <a href="#" class="resource-link">Interactive Examples</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Module 2 -->
+        <div class="module">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-title">
+                    🔧 Module 2: MCP Architecture & Technical Components
+                    <span class="module-level">Beginner-Medium</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <span class="duration">4-5 hours</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+            </div>
+            <div class="module-content">
+                <div class="learning-objectives">
+                    <h4>🎯 Learning Objectives</h4>
+                    <ul>
+                        <li>Understand MCP's technical architecture and components</li>
+                        <li>Learn about servers, clients, and transport mechanisms</li>
+                        <li>Explore tools, resources, and prompts in MCP</li>
+                        <li>Understand message flow and protocol specifications</li>
+                    </ul>
+                </div>
+                
+                <div class="topics">
+                    <div class="topic">
+                        <h5>🏗️ MCP Architecture Overview</h5>
+                        <p>Deep dive into MCP's client-server architecture, transport layers, and how components interact to enable seamless AI agent communication.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>🛠️ Tools & Resources</h5>
+                        <p>Understanding MCP tools (functions AI can call), resources (data AI can access), and how they're defined and managed.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>💬 Prompts & Templates</h5>
+                        <p>How MCP handles prompt templates, dynamic prompt generation, and context-aware response formatting.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>📡 Transport Mechanisms</h5>
+                        <p>Standard input/output, WebSockets, HTTP, and other transport methods for MCP communication.</p>
+                    </div>
+                </div>
+                
+                <div class="activities">
+                    <h4>🎯 Hands-On Activities</h4>
+                    <ul>
+                        <li>Diagram exercise: Map out MCP architecture components</li>
+                        <li>Code walkthrough: Examine simple MCP server implementation</li>
+                        <li>Protocol analysis: Trace message flow in MCP communication</li>
+                    </ul>
+                </div>
+                
+                <div class="assessment">
+                    <h4>📋 Assessment</h4>
+                    <ul>
+                        <li>Technical quiz: MCP architecture and components (15 questions)</li>
+                        <li>Diagram creation: Design an MCP system for a specific use case</li>
+                    </ul>
+                </div>
+                
+                <div class="resource-links">
+                    <h5>📚 Additional Resources</h5>
+                    <a href="#" class="resource-link">MCP Specification</a>
+                    <a href="#" class="resource-link">Architecture Diagrams</a>
+                    <a href="#" class="resource-link">Code Examples</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Module 3 -->
+        <div class="module">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-title">
+                    💻 Module 3: Building Your First MCP Server
+                    <span class="module-level">Medium</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <span class="duration">6-8 hours</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+            </div>
+            <div class="module-content">
+                <div class="learning-objectives">
+                    <h4>🎯 Learning Objectives</h4>
+                    <ul>
+                        <li>Set up development environment for MCP</li>
+                        <li>Create a basic MCP server with tools and resources</li>
+                        <li>Implement proper error handling and validation</li>
+                        <li>Test and debug your MCP server</li>
+                    </ul>
+                </div>
+                
+                <div class="topics">
+                    <div class="topic">
+                        <h5>⚙️ Development Setup</h5>
+                        <p>Installing dependencies, setting up your IDE, understanding MCP SDKs, and preparing your development environment.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>🔨 Creating Basic Server</h5>
+                        <p>Step-by-step guide to building your first MCP server, implementing basic handlers, and defining server capabilities.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>🛠️ Adding Tools & Resources</h5>
+                        <p>Implementing tools that AI can call, creating resources for data access, and managing tool/resource metadata.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>🐛 Testing & Debugging</h5>
+                        <p>Testing strategies for MCP servers, common issues and solutions, logging and debugging techniques.</p>
+                    </div>
+                </div>
+                
+                <div class="activities">
+                    <h4>🎯 Hands-On Activities</h4>
+                    <ul>
+                        <li>Coding project: Build a weather information MCP server</li>
+                        <li>Tool implementation: Create custom tools for file operations</li>
+                        <li>Integration testing: Connect your server to an MCP client</li>
+                    </ul>
+                </div>
+                
+                <div class="assessment">
+                    <h4>📋 Assessment</h4>
+                    <ul>
+                        <li>Practical project: Build and demonstrate a working MCP server</li>
+                        <li>Code review: Peer assessment of server implementation</li>
+                    </ul>
+                </div>
+                
+                <div class="resource-links">
+                    <h5>📚 Additional Resources</h5>
+                    <a href="#" class="resource-link">MCP SDK Documentation</a>
+                    <a href="#" class="resource-link">Server Templates</a>
+                    <a href="#" class="resource-link">Testing Tools</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Module 4 -->
+        <div class="module">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-title">
+                    🤖 Module 4: Advanced Agent Behavior & Context Management
+                    <span class="module-level">Medium</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <span class="duration">5-6 hours</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+            </div>
+            <div class="module-content">
+                <div class="learning-objectives">
+                    <h4>🎯 Learning Objectives</h4>
+                    <ul>
+                        <li>Implement sophisticated agent behaviors and decision-making</li>
+                        <li>Master advanced context management techniques</li>
+                        <li>Design multi-turn conversations and state management</li>
+                        <li>Handle complex workflows and agent orchestration</li>
+                    </ul>
+                </div>
+                
+                <div class="topics">
+                    <div class="topic">
+                        <h5>🧠 Agent Decision Making</h5>
+                        <p>Implementing intelligent agent behaviors, decision trees, goal prioritization, and adaptive responses based on context.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>💾 Advanced Context Management</h5>
+                        <p>Persistent context storage, context compression, selective memory, and managing large conversation histories.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>🔄 Multi-Agent Coordination</h5>
+                        <p>Orchestrating multiple agents, handling agent-to-agent communication, and managing distributed workflows.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>🎭 Personality & Behavior</h5>
+                        <p>Designing consistent agent personalities, behavioral patterns, and maintaining character across interactions.</p>
+                    </div>
+                </div>
+                
+                <div class="activities">
+                    <h4>🎯 Hands-On Activities</h4>
+                    <ul>
+                        <li>Agent design: Create a personal assistant with memory</li>
+                        <li>Workflow simulation: Build a multi-step task automation agent</li>
+                        <li>Context experiment: Implement long-term memory systems</li>
+                    </ul>
+                </div>
+                
+                <div class="assessment">
+                    <h4>📋 Assessment</h4>
+                    <ul>
+                        <li>Agent behavior analysis: Evaluate agent decision-making patterns</li>
+                        <li>Context management project: Design a context-aware application</li>
+                    </ul>
+                </div>
+                
+                <div class="resource-links">
+                    <h5>📚 Additional Resources</h5>
+                    <a href="#" class="resource-link">Agent Design Patterns</a>
+                    <a href="#" class="resource-link">Context Management Best Practices</a>
+                    <a href="#" class="resource-link">Multi-Agent Systems</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Module 5 -->
+        <div class="module">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-title">
+                    🚀 Module 5: Production Deployment & Best Practices
+                    <span class="module-level">Medium</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <span class="duration">4-5 hours</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+            </div>
+            <div class="module-content">
+                <div class="learning-objectives">
+                    <h4>🎯 Learning Objectives</h4>
+                    <ul>
+                        <li>Deploy MCP systems to production environments</li>
+                        <li>Implement security, monitoring, and scalability measures</li>
+                        <li>Apply industry best practices and optimization techniques</li>
+                        <li>Plan future developments and continuous improvement</li>
+                    </ul>
+                </div>
+                
+                <div class="topics">
+                    <div class="topic">
+                        <h5>🛡️ Security & Privacy</h5>
+                        <p>Authentication, authorization, data encryption, privacy considerations, and security best practices for MCP systems.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>📊 Monitoring & Analytics</h5>
+                        <p>Performance monitoring, usage analytics, error tracking, and system health dashboards for production MCP deployments.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>⚡ Scalability & Performance</h5>
+                        <p>Load balancing, caching strategies, horizontal scaling, and optimizing MCP systems for high-traffic environments.</p>
+                    </div>
+                    <div class="topic">
+                        <h5>🔄 Continuous Improvement</h5>
+                        <p>A/B testing agent behaviors, collecting user feedback, iterative improvement strategies, and staying current with MCP updates.</p>
+                    </div>
+                </div>
+                
+                <div class="activities">
+                    <h4>🎯 Hands-On Activities</h4>
+                    <ul>
+                        <li>Deployment exercise: Deploy MCP server to cloud platform</li>
+                        <li>Monitoring setup: Implement logging and monitoring solutions</li>
+                        <li>Security audit: Review and secure your MCP implementation</li>
+                    </ul>
+                </div>
+                
+                <div class="assessment">
+                    <h4>📋 Assessment</h4>
+                    <ul>
+                        <li>Production deployment: Successfully deploy a production-ready MCP system</li>
+                        <li>Best practices checklist: Demonstrate implementation of key best practices</li>
+                        <li>Final project: End-to-end MCP application with documentation</li>
+                    </ul>
+                </div>
+                
+                <div class="resource-links">
+                    <h5>📚 Additional Resources</h5>
+                    <a href="#" class="resource-link">Deployment Guides</a>
+                    <a href="#" class="resource-link">Security Checklists</a>
+                    <a href="#" class="resource-link">Performance Optimization</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleModule(header) {
+            const content = header.nextElementSibling;
+            const isActive = content.classList.contains('active');
+            
+            // Close all modules first
+            document.querySelectorAll('.module-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.module-header').forEach(header => {
+                header.classList.remove('active');
+            });
+            
+            // Open clicked module if it wasn't already active
+            if (!isActive) {
+                content.classList.add('active');
+                header.classList.add('active');
+            }
+        }
+        
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.module-checkbox input[type="checkbox"]');
+            const checkedBoxes = document.querySelectorAll('.module-checkbox input[type="checkbox"]:checked');
+            const progress = (checkedBoxes.length / checkboxes.length) * 100;
+            
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            let progressText = '';
+            if (progress === 0) {
+                progressText = '0% Complete - Start your journey into MCP and Agentic AI!';
+            } else if (progress === 100) {
+                progressText = '100% Complete - Congratulations! You\'ve mastered MCP in Agentic AI! 🎉';
+            } else {
+                progressText = Math.round(progress) + '% Complete - Great progress! Keep learning!';
+            }
+            
+            document.getElementById('progressText').textContent = progressText;
+        }
+        
+        // Initialize progress
+        updateProgress();
+    </script>
+</body>
+</html>
